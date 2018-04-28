@@ -100,6 +100,25 @@ class RegistrationForm extends \dektrium\user\models\RegistrationForm
         $rules['fieldLength']   = ['field', 'string', 'max' => 10];
         return $rules;
     }
+    /**
+     * @inheritdoc
+     */
+    public function loadAttributes(User $user)
+    {
+    	// here is the magic happens
+    	$user->setAttributes([
+    			'email'    => $this->email,
+    			'username' => $this->username,
+    			'password' => $this->password,
+    			'field' => $this->field,
+    			]);
+    	/** @var Profile $profile */
+    	$profile = \Yii::createObject(Profile::className());
+    	$profile->setAttributes([
+        
+    			]);
+    	$user->setProfile($profile);
+    }
 }
 ```
 
